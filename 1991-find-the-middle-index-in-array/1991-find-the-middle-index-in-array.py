@@ -1,5 +1,8 @@
 class Solution:
     def findMiddleIndex(self, nums: List[int]) -> int:
+        # Approach 1: After solving "Find Pivot Index" task
+        # and reviewewing answes in discussion
+        '''
         prefix_sum = [nums[0]]
         i = 1
         while i < len(nums):
@@ -16,3 +19,18 @@ class Solution:
         if left == right:
             return i
         return -1
+        '''
+        
+        # Approach 2: with review
+        postfixsum = sum(nums)
+        pivot = 0
+        prefixsum = 0
+        while pivot < len(nums):
+            postfixsum -= nums[pivot]
+            
+            if postfixsum == prefixsum:
+                return pivot
+            
+            prefixsum += nums[pivot]
+            pivot += 1
+        return -1 
