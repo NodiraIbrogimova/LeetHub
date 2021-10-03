@@ -1,5 +1,63 @@
 class Solution:
     def addBinary(self, a: str, b: str) -> str:
+        # Approach 4: Optimize the time complexity for creating result str
+        # It takes O(n^2) for creating such index. Aim is to reduce it to O(n) with storing str chars in a list and resturen the join version
+        amax = max(len(a), len(b))
+        a = a.zfill(amax)
+        b = b.zfill(amax)
+        carry, itr, result = (0, amax-1, [""]*(amax+1))
+        
+        while itr >=0 :
+            counter = carry
+            if a[itr] == '1':
+                counter += 1
+            if b[itr] == '1':
+                counter += 1
+            result[itr+1] = '0' if counter % 2 == 0 else '1'
+            
+            if counter < 2:
+                carry = 0
+            else:
+                carry = 1
+                
+            itr -= 1
+        if carry > 0:
+            result[0] = '1'
+        return "".join(result)
+        
+        
+        # Approach 3: Optimize the naive (brute-force) solution in Approach 1
+        # Learned hints from geeksforgeeks
+        
+        '''
+        11011
+          101
+         
+        3(10) => 011(2)
+        2(10) => 010(2) .
+        1(10) => 001(2)
+        0(10) => 000(2) .
+        '''
+        amax = max(len(a), len(b))
+        a = a.zfill(amax)
+        b = b.zfill(amax)
+        carry = 0
+        result = ""
+        itr = amax - 1
+        while itr >= 0:
+            counter = carry
+            if b[itr] == '1':
+                counter += 1
+            if a[itr] == '1':                    
+                counter += 1
+            result = ('0' if counter % 2 == 0 else '1') + result
+            carry = 0 if counter < 2 else 1
+            itr -= 1
+        if carry > 0:
+            result = "1" + result
+        return result
+        
+        
         # Approach 2: Using bin() and int() built-int methods
         return str(bin(int(a,2) + int(b,2)))[2:]
         
