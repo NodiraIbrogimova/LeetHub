@@ -9,9 +9,22 @@ class Solution:
         mask = 1 << p
         return (n & ~mask) | ((b << p) & mask)
         
-        Given a number n, a position p and a binary value b, we need to change the           bit at position p in n to value b.
+        Given a number n, a position p and a binary value b, we need to change the         bit at position p in n to value b.
         '''
+        curr = head
+        if curr is None:
+            return curr
         
+        position = 0
+        value = curr.val
+        while curr.next:
+            value = (value << 1) | curr.next.val
+            curr = curr.next
+        return value
+        
+        
+        mask =  1 << 4
+        print('mask: ', mask)
         num = head.val
         while head.next:
             num = num * 2 + head.next.val
