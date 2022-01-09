@@ -7,16 +7,14 @@ class Solution:
         2. at each step count the number of 'a's. Add count times a at the end of each word
         '''
         sentence = sentence.split(" ")
-        vowels = ('a', 'u', 'e', 'i', 'u', 'o', 'A', 'U', 'E', 'I', 'U', 'O')
+        vowels = ('a', 'e', 'i', 'o', 'u')
         count = 1
         for i in range(len(sentence)):
-            word = sentence[i]
-            first_char= word[0]
+            first_char= sentence[i][0].lower()
             suffix = ''
             if first_char not in vowels:
                 suffix = sentence[i][0]
                 sentence[i] = '' + sentence[i][1:]
-                
             suffix += ('ma' + count*'a')
             sentence[i] += suffix
             count += 1
