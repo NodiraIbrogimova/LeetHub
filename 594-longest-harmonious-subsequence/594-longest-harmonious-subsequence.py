@@ -1,7 +1,7 @@
 class Solution:
     def findLHS(self, nums: List[int]) -> int:
+        # Warm-up
         hashmap = Counter(nums)
-        # print('hasmap: ', hashmap)
         max_length = 0
         for curr in hashmap:
             if hashmap.get(curr+1):
@@ -9,42 +9,9 @@ class Solution:
             elif hashmap.get(curr-1):
                 max_length = max(max_length, hashmap[curr-1]+hashmap[curr]) 
         return max_length
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+    
+        # Approach 1
         hashmap = dict()
         longest_subs = 0
         i = 0
