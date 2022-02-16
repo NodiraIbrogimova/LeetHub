@@ -10,11 +10,9 @@ class Solution:
         filtered = [[0]*len(img[0]) for _ in range(len(img))]
         rows = [-1,-1,-1,0,0,0,1,1,1]
         cols = [-1, 0, 1, -1, 0, 1, -1, 0, 1]
-        row, col = 0, 0
-        while row < len(img):
-            while col < len(img[0]):
-                total = 0
-                neighbors_count = 0
+        for row in range(len(img)):
+            for col in range(len(img[0])):
+                total, neighbors_count = 0, 0
                 for i in range(9):
                     curr_row = row + rows[i]
                     curr_col = col + cols[i]
@@ -22,13 +20,8 @@ class Solution:
                     if self.is_inrange(curr_row, len(img)) and self.is_inrange(curr_col, len(img[0])):
                         total += img[curr_row][curr_col]
                         neighbors_count += 1
-                    
                 filtered[row][col] = total//neighbors_count
-                col += 1
-            col = 0
-            row += 1
         return filtered
-    
         '''
         rows = [-1,-1,-1,0,0,0,1,1,1]
         cols = [-1, 0, 1, -1, 0, 1, -1, 0, 1]
