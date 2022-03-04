@@ -1,5 +1,38 @@
 class Solution:
     def addDigits(self, num: int) -> int:
+        # if num
+#         if num // 10 <= 0:
+#             return num
+#         curr = addDigits()
+#         asum += curr
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         if num == 0:
             return 0
         if num % 9 == 0:
