@@ -1,13 +1,28 @@
 class Solution:
+    # asum = 0
     def addDigits(self, num: int) -> int:
-        # if num
-#         if num // 10 <= 0:
-#             return num
-#         curr = addDigits()
-#         asum += curr
-        
-        
-        
+        # Approach 2
+        # Iterative, brute-force
+        # TC: O(n)
+        # SC: O(n)
+        asum = num
+        # check if asum became a single digit number
+        while asum > 9:
+            num = asum
+            asum = 0
+            while num > 0:
+                asum += (num % 10)
+                num //= 10
+        return asum
+    
+        # Approach 1
+        # Iterative
+        # asum = 0
+        # if num // 10 <= 0:
+        #     return num
+        # curr = self.addDigits(num // 10)
+        # asum += (curr % 10)
+        # return asum
         
         
         
