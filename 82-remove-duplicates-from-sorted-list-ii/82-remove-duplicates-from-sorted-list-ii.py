@@ -3,32 +3,80 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
+
 class Solution:
     def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        # sentinel
-        sentinel = ListNode(0, head)
-
-        # predecessor = the last node 
-        # before the sublist of duplicates
-        pred = sentinel
-        
-        while head:
-            # if it's a beginning of duplicates sublist 
-            # skip all duplicates
-            if head.next and head.val == head.next.val:
-                # move till the end of duplicates sublist
-                while head.next and head.val == head.next.val:
-                    head = head.next
-                # skip all duplicates
-                pred.next = head.next 
-            # otherwise, move predecessor
-            else:
-                pred = pred.next 
-                
-            # move forward
-            head = head.next
+        # Approach 3
+        # Two pointers
+        '''
+        When should I delete/bypass a node:
+            When these values are present more than once in the list
+            How to detect if particular value is repetead?
+        Notes:
+            Repetitions can be present in the beginning, middle and in the end of the ll
+            Make sure to cover all possibilities
             
-        return sentinel.next
+        '''
+        # Approach 3: Warm-up
+        hashmap = dict()
+        curr = head
+        while curr:
+            hashmap[curr.val] = hashmap.get(curr.val, 0) + 1
+            curr = curr.next
+        curr = head
+        new_head = ListNode()
+        dummy = new_head
+        while curr:
+            if hashmap[curr.val] == 1:
+                dummy.next = curr
+                dummy = dummy.next
+            curr = curr.next
+        dummy.next = None
+        return new_head.next
+        
+    
+        # Approach 2
+        # Using hashset
+        # TC: O(n), SC: O(1)
+        if head is None: return head
+        
+        curr, seen, repeated = head, set(), set()
+        while curr:
+            if curr.val not in repeated:
+                if curr.val not in seen: seen.add(curr.val)
+                else: repeated.add(curr.val)
+            curr = curr.next
+        
+        curr = head
+        while curr:
+            if curr.val in repeated: curr.val = None
+            curr = curr.next
+        
+        curr, dummy_head = head, ListNode()
+        dummy = dummy_head
+        while curr:
+            if curr.val:
+                dummy.next = curr
+                dummy = dummy.next
+            curr = curr.next
+        dummy.next = None
+        return dummy_head.next
+                
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        # Approach 1
         if not head:
             return head
         
