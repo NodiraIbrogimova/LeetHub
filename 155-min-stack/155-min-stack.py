@@ -1,22 +1,23 @@
-# class Node:
-    
-#     def __init__(self, val=0, anext=None, prev=None):
-#         self.val = val
-#         self.anext = anext
-#         self.prev = prev
-        
-
 class MinStack:
-
+    
     def __init__(self):
         self.deque = deque()
-        self.min_index = 0
+        self.mins = list()
+        
         
     def push(self, val: int) -> None:
         self.deque.append(val)
-
+        # For minimum stack https://www.youtube.com/watch?v=ufwPuyxkNVE
+        if not self.mins:
+            self.mins.append(val)
+        elif self.mins[-1] >= val:
+            self.mins.append(val)
+        
+        
     def pop(self) -> None:
         element = self.deque[-1]
+        if element == self.mins[-1]:
+            self.mins.pop()
         return self.deque.pop()
 
     
@@ -25,7 +26,8 @@ class MinStack:
 
     
     def getMin(self) -> int:
-        return min(self.deque)
+        if self.mins: return self.mins[-1]
+        return -1
         
 
 
