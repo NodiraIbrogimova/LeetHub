@@ -1,49 +1,64 @@
+class Node:
+
+    def __init__(self, key=None, val=None, anext=None):
+        self.key = key
+        self.val = val
+        self.next = anext
+
+
 class MyHashMap:
 
     def __init__(self):
-        self.size = (10**4)+1
+        self.size = (10 ** 4) + 1
         self.hashmap = [None for _ in range(self.size)]
-    
+
     def _get_hash(self, key):
-        result = 0
+        accum = 0
         str_key = str(key)
         for achar in str_key:
-            result += ord(achar)
-        return result % self.size
-        
-        
+            accum += ord(achar)
+        return accum % self.size
+    
     def put(self, key: int, value: int) -> None:
-        item = [key, value]
-        ahash = self._get_hash(key)
-        if not self.hashmap[ahash]:
-            self.hashmap[ahash] = list([item])
+        position = self._get_hash(key)
+        head = self.hashmap[position]
+        if head is None:
+            self.hashmap[position] = Node(key=key, val=value)
         else:
-            for pair in self.hashmap[ahash]:
-                if pair[0] == key:
-                    pair[1] = value
+            while head:
+                if head.key == key:
+                    head.val = value
                     return True
-            self.hashmap[ahash].append(item)
-            return True
-        
-        
+                head = head.next
+            self.hashmap[position] = Node(key=key, val=value, anext=self.hashmap[position])
+
     def get(self, key: int) -> int:
-        ahash = self._get_hash(key)
-        if self.hashmap[ahash]:
-            for pair in self.hashmap[ahash]:
-                if pair[0] == key:
-                    return pair[1]
+        position = self._get_hash(key)
+        head = self.hashmap[position]
+        if head:
+            curr = head
+            while curr:
+                if curr.key == key:
+                    return curr.val
+                curr = curr.next
         return -1
-        
-        
-        
+
     def remove(self, key: int) -> None:
-        ahash = self._get_hash(key)
-        if not self.hashmap[ahash]: return False
-        for index, pair in enumerate(self.hashmap[ahash]):
-            if pair[0] == key:
-                self.hashmap[ahash].pop(index)
-                return True
-            
+        position = self._get_hash(key)
+        head = self.hashmap[position]
+        
+        if not head: return False
+        if head.key == key:
+            self.hashmap[position] = head.next
+            return
+        prev = head
+        head = head.next
+        while head:
+            if head.key == key:
+                prev.next = head.next
+                return
+            prev = prev.next
+            head = head.next
 
 
 # Your MyHashMap object will be instantiated and called as such:
