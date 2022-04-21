@@ -18,22 +18,38 @@ class Solution:
             Make sure to cover all possibilities
             
         '''
+        # Approach 4: Warm-up
+        sentinel = ListNode(0, head)
+        predecessor = sentinel
+        while head:
+            if head.next and head.next.val == head.val:
+                while head.next and head.next.val == head.val:
+                    head = head.next
+                predecessor.next = head.next
+            else:
+                predecessor = predecessor.next
+            head = head.next
+        return sentinel.next
+        
+        
         # Approach 3: Warm-up
+        # Time: O(n)
+        # Space: O(100) = O(1)
         hashmap = dict()
         curr = head
         while curr:
             hashmap[curr.val] = hashmap.get(curr.val, 0) + 1
             curr = curr.next
         curr = head
-        new_head = ListNode()
-        dummy = new_head
+        sentinel = ListNode()
+        pred = sentinel
         while curr:
             if hashmap[curr.val] == 1:
-                dummy.next = curr
-                dummy = dummy.next
+                pred.next = curr
+                pred = pred.next
             curr = curr.next
-        dummy.next = None
-        return new_head.next
+        pred.next = None
+        return sentinel.next
         
     
         # Approach 2
